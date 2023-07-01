@@ -11,12 +11,14 @@ class CleanPhoto:
     accuracy = 0
     photos = []
     duplicates = []
+    data = {}
 
     def __init__(self, verbose=False, accuracy=4) -> None:
         self.path = Utils.get_path()
         self.verbose = verbose
         self.photos = listdir(self.path)
         self.accuracy = accuracy
+        self.data = {}
 
     def __str__(self):
         sentence = ""
@@ -37,24 +39,31 @@ class CleanPhoto:
 
         return total
 
-    def __find_same_visual(self):
+    def __find_same_visual_recursive(self, path):
 
-        data = {}
+        for photo in listdir(path):
 
-        for photo in self.photos:
+            photo_path = path + "/" + photo
 
-            with Image.open(self.path + "/" + photo) as img:
+            if (Utils.is_directory(photo_path)):
+                self.__find_same_visual_recursive(photo_path)
+                continue
+
+            if not photo.lower().endswith(('.jpg', '.png', '.jpeg', '.heic')):
+                continue
+
+            with Image.open(photo_path) as img:
                 hash = imagehash.average_hash(img, self.accuracy * 2)
 
-                if hash in data:
-                    print(f"Find duplication of {data[hash]} by {photo}")
+                if hash in self.data:
+                    print(f"Find duplication of {self.data[hash]} by {photo}")
                     name, size, extension = Utils.get_information(
                         photo, self.path)
 
                     self.duplicates.append(
                         File(name, size, extension, self.path + "/" + photo))
                 else:
-                    data[hash] = photo
+                    self.data[hash] = photo
 
     def __remove_files(self):
         print(
@@ -70,7 +79,10 @@ class CleanPhoto:
         else:
             print("Remove operation was canceled.")
 
+    def get_duplicates(self):
+        return self.duplicates
+
     def clean(self):
-        self.__find_same_visual()
+        self.__find_same_visual_recursive(self.path)
         print(self)
         self.__remove_files()

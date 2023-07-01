@@ -1,3 +1,6 @@
+import os
+
+
 class Utils:
 
     @staticmethod
@@ -21,6 +24,10 @@ class Utils:
         print('Path you would like to clear files :')
         x = input()
         return x.replace('\\', '/')
+
+    @staticmethod
+    def is_directory(path):
+        return os.path.isdir(path)
 
 
 class File:
