@@ -21,7 +21,7 @@ pub mod clear {
             for (key,value) in &self.duplicates {
 
                 if value.len() > 1{
-                    sentence.push_str(format!("File {} have {} duplications\n", key, value.len() - 1).as_str());
+                    sentence += &format!("File {} have {} duplications\n", key, value.len() - 1);
 
                     value.iter()
                         .filter(|file|  &file.name != key)
@@ -50,9 +50,9 @@ pub mod clear {
         fn remove_dump_name_duplicate(&self, name: &String) -> String{
             let pattern= Regex::new(r" \(\d\)").unwrap();
 
-            let replaced = pattern.replace_all(name.as_str(),"");
+            let replaced = pattern.replace_all(name,"");
 
-            replaced.to_string().trim().to_string()
+            replaced.trim().to_string()
         }
 
         fn find_duplicate_file_by_name(&mut self){

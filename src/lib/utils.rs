@@ -12,7 +12,7 @@ pub mod file{
 
     impl ToString for File{
         fn to_string(&self) -> String {
-            format!("Path : {} as a size of {} bytes with extension {}\n", self.path, self.size, self.extension).to_string()
+            format!("Path : {} as a size of {} bytes with extension {}\n", self.path, self.size, self.extension)
         }
     }
 
