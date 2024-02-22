@@ -75,14 +75,6 @@ pub mod clear {
             }
         }
 
-        fn find_fake_duplicate(&self){
-            self.duplicates
-                .iter()
-                .for_each(|(k,v)|{
-                    let base =
-                });
-        }
-
         fn count_duplication_size(&self) -> (usize, u64){
 
             let mut counter = 0;

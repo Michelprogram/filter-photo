@@ -1,16 +1,18 @@
-use crate::lib::utils::{file, tools};
-use std::fs::{read, read_dir, ReadDir};
-use crate::lib::file::clear::CleanFile;
+use crate::lib::photo::photo::Cleaner;
 
 pub mod lib;
 
 
 fn main() {
-    let PATH:String = String::from("/Users/michel-developer/Desktop/photo mamy/2016-12");
+    let PATH:String = String::from("/Users/michel-developer/Desktop/photo mamy");
 
-    let path = tools::get_path();
+    //let path = tools::get_path();
 
-    let mut file = CleanFile::new(PATH, true);
+/*    let mut file = CleanFile::new(PATH, true);
 
-    file.run();
+    file.run();*/
+
+    let mut photo = Cleaner::new(PATH, true);
+
+    photo.run()
 }
